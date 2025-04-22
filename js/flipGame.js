@@ -3,21 +3,20 @@ let newArr = [];
 let imgStr = '';
 let checkUrl = '';
 let Start = false;
+let thinkCount = 5;
+let lastTime = 30;
+let score = 0;
+let startCountTime = null;
+let startThinkCount = null;
 
 
 $(function(){
     //開始遊戲
     $('#start').click(function(){
-        $('button').attr('disabled',true);
-        StartGame();
-    });
-
-    //重新遊戲
-    $('#reStart').click(function(){
-        Start = false;
-        $(this).css('display','none');
-        $('#start').css('display','block');
+        $(this).text('重新開始')
+        $('#mask').show();
         $(document).find(".card").flip(false);
+        StartGame();
     });
 
     //點擊卡片
@@ -29,6 +28,11 @@ $(function(){
             }else{
                 //第二次翻開卡片
                 if($(this).find('img').attr('src') === checkUrl){
+                    score++;
+                    if(score == 9){
+                        clearInterval(startCountTime);
+                        alert(`恭喜過關！總共花費${30 - lastTime}秒`);
+                    }
                 }else{
                     $(this).flip(false);
                     $(`img[src="${checkUrl}"]`).parents('.card').flip(false);
@@ -59,9 +63,11 @@ function reSort(){
 
 
 function StartGame(){
+    lastTime = 30;
+    score = 0;
+    Start = false;
+
     checkUrl = '';
-    $('#start').css('display','none');
-    $('#reStart').css('display','block');
     //帶入左方原圖
     reSort();
     $('#leftArea').html(imgStr);
@@ -74,13 +80,46 @@ function StartGame(){
 
     let startShow = setTimeout(function(){
         $(document).find(".card").flip(true);
-    },500);
 
-    let showCount = setTimeout(function(){
-        $(document).find(".card").flip(false);
-        Start = true;
-        $('button').attr('disabled',false);
-    },5500);
-    
+        if(startThinkCount){
+            clearInterval(startThinkCount);
+        }
+        startThinkCount = setInterval(()=>{
+            thinkTime();
+        },1000);
+
+    },100);
 }
 
+function timeCount(){
+    lastTime--;
+    
+    if(lastTime < 0){
+        clearInterval(startCountTime);
+        lastTime = 30;
+        alert('時間到');
+        start = false;
+        $(document).find(".card").flip(false);
+    }
+    $('#last-time').text(lastTime);
+}
+
+function thinkTime(){
+    thinkCount--;
+    
+    if(thinkCount == 0){
+        clearInterval(startThinkCount);
+        $('#mask').hide();
+        thinkCount = 5;
+        $(document).find(".card").flip(false);
+        Start = true;
+
+        if(startCountTime){
+            clearInterval(startCountTime);
+        }
+        startCountTime = setInterval(()=>{
+            timeCount();
+        },1000);
+    }
+    $('#think-count').text(thinkCount);
+}

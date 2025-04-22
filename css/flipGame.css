@@ -1,32 +1,52 @@
-.card{
-    margin: 20px;
-    width: 150px;
-    height: 200px;
-    border-radius: 10px;
-    border:1px solid #dddddd;
-    box-shadow: 1px 1px 1px #eee;
-    font-size: 16px;
-    color: gray;
+* {
+  box-sizing: border-box;
 }
 
-.card  div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.card {
+  margin: 20px;
+  width: 150px;
+  height: 200px;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  box-shadow: 1px 1px 1px #eee;
+  font-size: 16px;
+  color: gray;
 }
 
-.front{
-    background-color: lightskyblue;
+.card div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.back{
-    background-color: lightsalmon;
+.front {
+  background-color: lightskyblue;
 }
 
-#leftArea{
-    border-right-color: lightgreen;
+.back {
+  background-color: lightsalmon;
 }
 
-#reStart{
-    display: none;
+#leftArea {
+  border-right-color: lightgreen;
+}
+
+#reStart {
+  display: none;
+}
+
+#mask {
+  display: none;
+}
+
+#think-count {
+  font-size: 72px;
+  color: white;
+  font-weight: bolder;
+  text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000,
+    1px 1px 0 #000000;
+}
+
+.rule_area {
+  border: 1px solid lightseagreen;
 }
